@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  border: 0;
+  font-family: "Bebas Neue", cursive;
+  background-color: darkgray;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  color: purple;
+}
+
+header h1 {
+  text-decoration: underline;
+}
+
+.mainSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 15vw;
+}
+#Heading {
+  font-size: 5vw;
+}
+#text {
+  font-size: 2vw;
+  text-align: center;
+}
+#startButton {
+  background-color: purple;
+  padding: 2vw;
+  border-radius: 10%;
+}
