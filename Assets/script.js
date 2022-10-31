@@ -3,8 +3,7 @@ var headerEl = document.querySelector("#Heading");
 
 function startQuiz() {
   headerEl.textContent = "Go!!!";
+  console.log
 }
 
-startEl.addEventListener("click", function () {
-  alert("Hello");
-});
+startEl.addEventListener("click", startQuiz);
