@@ -34,3 +34,20 @@ header h1 {
   padding: 2vw;
   border-radius: 10%;
 }
+
+button {
+  background-color: purple;
+  padding: 2vw;
+  border-radius: 10%;
+  font-size: 2vw;
+}
+
+section {
+  display: flex;
+
+  justify-content: space-around;
+}
+
+section button {
+  margin: 1vw;
+}
