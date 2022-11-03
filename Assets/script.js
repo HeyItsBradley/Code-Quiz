@@ -26,20 +26,29 @@ var time = 0;
 var answerArea = document.getElementById("placeButtons");
 var makeBtn = document.body.querySelector("#placeButtons");
 var questionAmount = Questions.length + 1;
-var currentQuestion;
+var questionsWereOn;
+var num = 0;
+var score = "";
+
+function startTimer() {
+  timer.textContent = 70;
+}
+
+function endScreen() {
+  document.body.querySelector("#placeButtons").textContent = "";
+  document.getElementById("Heading").textContent = "High Scores!";
+  
+}
 
 function startQuiz() {
-  //need to find out if a questions has been asked, remove that question from the array of questsions that can still be asked
-  console.log("questoin amout is starting at " + questionAmount);
   questionAmount = questionAmount - 1;
-  console.log("question ammount is now" + questionAmount);
+
   if (questionAmount <= 0) {
-    alert("ran out");
+    endScreen();
+    return;
   }
-  timer.textContent = 70;
-  const randomChoice = Math.floor(Math.random() * Questions.length);
-  currentQuestion = Questions[randomChoice];
-  console.log(Questions);
+  var currentQuestion = Questions[num];
+  console.log("the current value of num is " + num);
 
   answerArea.textContent = "";
 
@@ -61,10 +70,6 @@ function startQuiz() {
     currentQuestion.choices[3];
 
   answerArea.children.className = "option";
-  answerArea.children[0];
-  answerArea.children[1];
-  answerArea.children[2];
-  answerArea.children[3];
 
   answerArea.children[0].setAttribute("Answer", currentQuestion.choices[0]);
   answerArea.children[1].setAttribute("Answer", currentQuestion.choices[1]);
@@ -82,56 +87,41 @@ function startQuiz() {
   answerArea.children[0].addEventListener("click", function () {
     userChoice = answerArea.children[0].getAttribute("status");
     if (userChoice === "Correct") {
-      updateQuestions();
-
+      num++;
       startQuiz();
-      console.log("ya thats right !");
     } else {
-      console.log("did not work");
     }
-    console.log(userChoice);
   });
 
   answerArea.children[1].addEventListener("click", function () {
     userChoice = answerArea.children[1].getAttribute("status");
     if (userChoice === "Correct") {
-      updateQuestions();
-
+      num++;
       startQuiz();
-      console.log("ya thats right !");
     } else {
-      console.log("did not work");
     }
   });
 
   answerArea.children[2].addEventListener("click", function () {
     userChoice = answerArea.children[2].getAttribute("status");
     if (userChoice === "Correct") {
-      updateQuestions();
-
+      num++;
       startQuiz();
-      console.log("ya thats right !");
     } else {
-      console.log("did not work");
     }
   });
 
   answerArea.children[3].addEventListener("click", function () {
     userChoice = answerArea.children[3].getAttribute("status");
     if (userChoice === "Correct") {
-      updateQuestions();
-
+      num++;
       startQuiz();
-      console.log("ya thats right !");
     } else {
-      console.log("did not work");
     }
   });
-  function updateQuestions() {
-    console.log(currentQuestion);
-    Questions.slice(currentQuestion, "1");
-  }
 }
-function quizAgain() {}
 
-startEl.addEventListener("click", startQuiz);
+startEl.addEventListener("click", () => {
+  startQuiz();
+  startTimer();
+});
