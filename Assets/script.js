@@ -21,18 +21,20 @@ var Questions = [
     answer: "YES",
   },
 ];
-
+var findlis = document.querySelector("li");
 var timer = document.getElementById("timer");
 var answerArea = document.getElementById("placeButtons");
 var makeBtn = document.body.querySelector("#placeButtons");
-var questionAmount = Questions.length + 1;
+var questionAmount = Questions.length;
 var questionsWereOn;
 var num = 0;
 var score = "";
 var highScoreList = JSON.parse(localStorage.getItem("highScoreList")) || [];
-
 var amountHighScores = 5;
 var makeHighScore = document.getElementById("HighScores");
+var playAgainButton = document.getElementById("playAgain");
+
+var madePlayAgainButton = document.querySelector("#playAgain");
 
 console.log(highScoreList);
 
@@ -40,7 +42,6 @@ usersName.style.visibility = "hidden";
 submitName.style.visibility = "hidden";
 
 function startTimer() {
-  
   var time = 30;
   var timeLeft = setInterval(function () {
     document.getElementById("timer").textContent = time;
@@ -90,8 +91,9 @@ function highScoreScreen() {
   document.getElementById("Heading").textContent = "High Scores!";
   submitName.style.visibility = "hidden";
   usersName.style.visibility = "hidden";
+  playAgainButton.style.visibility = "visible";
+
   // startEl.style.visibility = "Visible";
-  document.getElementById("HighScores").style.backgroundColor = "#white";
 
   for (let i = 0; i < highScoreList.length; i++) {
     var UserName = highScoreList[i].name;
@@ -103,11 +105,17 @@ function highScoreScreen() {
 }
 
 function startQuiz() {
-  questionAmount = questionAmount - 1;
+  //add a way to set questions back to full
+  // questionAmount = questionAmount - 1;
+  playAgainButton.style.visibility = "hidden";
+  console.log(num);
 
-  if (questionAmount <= 0) {
+  if (questionAmount === 0) {
     submitScore();
     return;
+  }
+  if (num === 3) {
+    console.log("im here");
   }
   var currentQuestion = Questions[num];
   console.log("the current value of num is " + num);
@@ -150,6 +158,8 @@ function startQuiz() {
     userChoice = answerArea.children[0].getAttribute("status");
     if (userChoice === "Correct") {
       num++;
+      questionAmount--;
+      console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
     }
@@ -159,6 +169,8 @@ function startQuiz() {
     userChoice = answerArea.children[1].getAttribute("status");
     if (userChoice === "Correct") {
       num++;
+      questionAmount--;
+      console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
     }
@@ -168,6 +180,8 @@ function startQuiz() {
     userChoice = answerArea.children[2].getAttribute("status");
     if (userChoice === "Correct") {
       num++;
+      questionAmount--;
+      console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
     }
@@ -177,17 +191,36 @@ function startQuiz() {
     userChoice = answerArea.children[3].getAttribute("status");
     if (userChoice === "Correct") {
       num++;
+      questionAmount--;
+      console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
     }
   });
 }
 
+function thisMakesRestart() {
+  madePlayAgainButton.appendChild(
+    document.createElement("button")
+  ).textContent = "Play Again";
+}
+
 startEl.addEventListener("click", () => {
   startQuiz();
   startTimer();
+  thisMakesRestart();
 });
 
-// scoreButton.addEventListener("click", highScoreScreen);
+playAgainButton.addEventListener("click", function () {
+  console.log("it worked!");
+  console.log("the question amount is now" + questionAmount);
+  questionAmount = 3;
+//WHAT TO DO TOMRROW
+//  FIGURE OUT HOW TO HIDE HIGHSCORE LIST ON PLAY EVENT CLICK
+  findlis.style.visibility = "hidden";
+  document.querySelector("li").remove();
 
-// submitName.addEventListener("click", highScoreScreen);
+  num = 0;
+  console.log("the question amount is now" + questionAmount);
+  startQuiz();
+});
