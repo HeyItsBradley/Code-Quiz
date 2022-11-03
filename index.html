@@ -15,16 +15,27 @@
   </head>
   <body>
     <header>
-      <h1>View HighScores</h1>
+      <h1 id="scoreButton">View HighScores</h1>
       <h2>Time: <span id="timer"></span></h2>
     </header>
+
     <div class="mainSection">
       <h3 id="Heading">Coding Quiz Challenge!</h3>
+      <div id="submitionForm">
+        <input
+          type="text"
+          name="userName"
+          id="usersName"
+          placeholder="Enter your initials!"
+        />
+        <button id="submitName">Submit!</button>
+      </div>
       <p id="text">
         Try to answer the follwing questions as fast as you can within the time
         limit! Keep in mind selected a wrong answer will lower the timer by 10
         seconds. Your final score will be the amount of time left, good luck !!!
       </p>
+      <ol id="HighScores"></ol>
       <section id="placeButtons"></section>
 
       <button id="startButton">Start Quiz</button>

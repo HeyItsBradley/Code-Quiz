@@ -51,3 +51,15 @@ section {
 section button {
   margin: 1vw;
 }
+
+input {
+  background-color: white;
+  height: 2vw;
+  width: 20vw;
+}
+
+#submitName {
+  background-color: blueviolet;
+  padding: 4px;
+  font-size: 1vw;
+}

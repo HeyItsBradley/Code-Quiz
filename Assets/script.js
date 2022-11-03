@@ -1,8 +1,9 @@
 var userChoice = null;
 var startEl = document.querySelector("#startButton");
-
+var scoreButton = document.getElementById("scoreButton");
 var headerEl = document.querySelector("#Heading");
 var startText = document.getElementById("text");
+var submitButton = document.getElementById("submitName");
 var Questions = [
   {
     title: "This is questions 1",
@@ -22,29 +23,95 @@ var Questions = [
 ];
 
 var timer = document.getElementById("timer");
-var time = 0;
+
 var answerArea = document.getElementById("placeButtons");
 var makeBtn = document.body.querySelector("#placeButtons");
 var questionAmount = Questions.length + 1;
 var questionsWereOn;
 var num = 0;
 var score = "";
+var highScoreList = JSON.parse(localStorage.getItem("highScoreList")) || [];
+var amountHighScores = 5;
+console.log(highScoreList);
+
+usersName.style.visibility = "hidden";
+submitName.style.visibility = "hidden";
 
 function startTimer() {
-  timer.textContent = 70;
+  console.log("hello");
+  var time = 30;
+  var timeLeft = setInterval(function () {
+    document.getElementById("timer").textContent = time;
+    time--;
+    if (time < 0 || questionAmount <= 0) {
+      clearInterval(timeLeft);
+    }
+  }, 1000);
 }
 
-function endScreen() {
+function submitScore() {
+  document.body.querySelector("#placeButtons").textContent = "";
+  document.getElementById("Heading").textContent = "Almost done !";
+  usersName.style.visibility = "visible";
+  submitName.style.visibility = "visible";
+
+  submitName.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var enteredScore = document.getElementById("usersName").value;
+    var score = timer.textContent;
+
+    if (enteredScore === "") {
+      alert("Please enter your name to submit score!");
+      submitScore();
+      return;
+    } else {
+      var scoreAndName = {
+        name: enteredScore,
+        score: score,
+      };
+      highScoreList.push(scoreAndName);
+
+      highScoreList.sort((a, b) => b.score - a.score);
+
+      highScoreList.splice(5);
+      console.log("hello");
+      localStorage.setItem("highscores", JSON.stringify(highScoreList));
+      console.log(highScoreList);
+      highScoreScreen();
+    }
+  });
+}
+function highScoreScreen() {
   document.body.querySelector("#placeButtons").textContent = "";
   document.getElementById("Heading").textContent = "High Scores!";
-  
+  submitName.style.visibility = "hidden";
+  usersName.style.visibility = "hidden";
+
+  //test
+  startEl.style.visibility = "Visible";
+  document.getElementById("HighScores").style.backgroundColor = "#white";
+
+  highScoreList.innerHtml = highScoreList
+    .map((highScoreList) => {
+      return;
+      `<li class="high-score">
+      ${highScoreList.enteredScore} - ${highScoreList.score}
+    </li>`;
+    })
+    .join("");
+
+  startEl.addEventListener("click", () => {
+    startQuiz();
+    startTimer();
+  });
 }
 
 function startQuiz() {
   questionAmount = questionAmount - 1;
 
   if (questionAmount <= 0) {
-    endScreen();
+    submitScore();
     return;
   }
   var currentQuestion = Questions[num];
@@ -125,3 +192,7 @@ startEl.addEventListener("click", () => {
   startQuiz();
   startTimer();
 });
+
+scoreButton.addEventListener("click", highScoreScreen);
+
+submitName.addEventListener("click", highScoreScreen);
