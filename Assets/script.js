@@ -23,7 +23,6 @@ var Questions = [
 ];
 
 var timer = document.getElementById("timer");
-
 var answerArea = document.getElementById("placeButtons");
 var makeBtn = document.body.querySelector("#placeButtons");
 var questionAmount = Questions.length + 1;
@@ -31,14 +30,17 @@ var questionsWereOn;
 var num = 0;
 var score = "";
 var highScoreList = JSON.parse(localStorage.getItem("highScoreList")) || [];
+
 var amountHighScores = 5;
+var makeHighScore = document.getElementById("HighScores");
+
 console.log(highScoreList);
 
 usersName.style.visibility = "hidden";
 submitName.style.visibility = "hidden";
 
 function startTimer() {
-  console.log("hello");
+  
   var time = 30;
   var timeLeft = setInterval(function () {
     document.getElementById("timer").textContent = time;
@@ -66,7 +68,7 @@ function submitScore() {
       submitScore();
       return;
     } else {
-      var scoreAndName = {
+      const scoreAndName = {
         name: enteredScore,
         score: score,
       };
@@ -83,28 +85,21 @@ function submitScore() {
   });
 }
 function highScoreScreen() {
+  console.log("i have been called");
   document.body.querySelector("#placeButtons").textContent = "";
   document.getElementById("Heading").textContent = "High Scores!";
   submitName.style.visibility = "hidden";
   usersName.style.visibility = "hidden";
-
-  //test
-  startEl.style.visibility = "Visible";
+  // startEl.style.visibility = "Visible";
   document.getElementById("HighScores").style.backgroundColor = "#white";
 
-  highScoreList.innerHtml = highScoreList
-    .map((highScoreList) => {
-      return;
-      `<li class="high-score">
-      ${highScoreList.enteredScore} - ${highScoreList.score}
-    </li>`;
-    })
-    .join("");
+  for (let i = 0; i < highScoreList.length; i++) {
+    var UserName = highScoreList[i].name;
+    var setScore = highScoreList[i].score;
 
-  startEl.addEventListener("click", () => {
-    startQuiz();
-    startTimer();
-  });
+    makeHighScore.appendChild(document.createElement("li")).textContent =
+      UserName + " -" + setScore;
+  }
 }
 
 function startQuiz() {
@@ -193,6 +188,6 @@ startEl.addEventListener("click", () => {
   startTimer();
 });
 
-scoreButton.addEventListener("click", highScoreScreen);
+// scoreButton.addEventListener("click", highScoreScreen);
 
-submitName.addEventListener("click", highScoreScreen);
+// submitName.addEventListener("click", highScoreScreen);
