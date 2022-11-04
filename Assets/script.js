@@ -7,8 +7,13 @@ var submitButton = document.getElementById("submitName");
 var Questions = [
   {
     title: "This is questions 1",
-    choices: ["Choice Yes", "Choice No", "Choices MaybeSo", "Choices Perhabs"],
-    answer: "Choice No",
+    choices: [
+      "Choice Yes",
+      "Choice correct",
+      "Choices MaybeSo",
+      "Choices Perhabs",
+    ],
+    answer: "Choice correct",
   },
   {
     title: "You want to play?",
@@ -49,7 +54,7 @@ function startTimer() {
     time--;
     if (time < 0 || questionAmount <= 0) {
       clearInterval(timeLeft);
-      time=0
+      time = 0;
       goToSubmit();
     }
   }, 1000);
