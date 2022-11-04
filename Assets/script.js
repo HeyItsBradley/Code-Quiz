@@ -21,7 +21,7 @@ var Questions = [
     answer: "YES",
   },
 ];
-var findlis = document.querySelector("li");
+
 var timer = document.getElementById("timer");
 var answerArea = document.getElementById("placeButtons");
 var makeBtn = document.body.querySelector("#placeButtons");
@@ -33,6 +33,8 @@ var highScoreList = JSON.parse(localStorage.getItem("highScoreList")) || [];
 var amountHighScores = 5;
 var makeHighScore = document.getElementById("HighScores");
 var playAgainButton = document.getElementById("playAgain");
+var scoresSubmited = 0;
+var submitionForm = document.getElementById("submitionForm");
 
 var madePlayAgainButton = document.querySelector("#playAgain");
 
@@ -52,55 +54,62 @@ function startTimer() {
   }, 1000);
 }
 
+function goToSubmit() {
+  console.log("goToSubmit Has occured");
+  submitScore();
+}
 function submitScore() {
   document.body.querySelector("#placeButtons").textContent = "";
   document.getElementById("Heading").textContent = "Almost done !";
   usersName.style.visibility = "visible";
   submitName.style.visibility = "visible";
+  //clear out form on load
+  submitionForm.textContent = "";
 
   submitName.addEventListener("click", function (event) {
     event.preventDefault();
+    event.stopPropagation();
+    //clear out highscores
+    var liLength = document.getElementById("HighScores").children.length;
+    console.log("current lenght is " + liLength);
 
-    var enteredScore = document.getElementById("usersName").value;
+    var enteredName = document.getElementById("usersName").value;
     var score = timer.textContent;
 
-    if (enteredScore === "") {
+    if (enteredName === "") {
       alert("Please enter your name to submit score!");
       submitScore();
       return;
     } else {
+      console.log("a score has been pushed");
       const scoreAndName = {
-        name: enteredScore,
+        name: enteredName,
         score: score,
       };
       highScoreList.push(scoreAndName);
-
-      highScoreList.sort((a, b) => b.score - a.score);
-
-      highScoreList.splice(5);
-      console.log("hello");
       localStorage.setItem("highscores", JSON.stringify(highScoreList));
       console.log(highScoreList);
       highScoreScreen();
+      return;
     }
   });
 }
 function highScoreScreen() {
-  console.log("i have been called");
+  // scoresSubmited++;
+  document.getElementById("HighScores").style.visibility = "visible";
   document.body.querySelector("#placeButtons").textContent = "";
+
   document.getElementById("Heading").textContent = "High Scores!";
   submitName.style.visibility = "hidden";
   usersName.style.visibility = "hidden";
   playAgainButton.style.visibility = "visible";
+  console.log("The scores subbmited count is " + scoresSubmited);
 
-  // startEl.style.visibility = "Visible";
-
-  for (let i = 0; i < highScoreList.length; i++) {
+  for (let i = 0; i < scoresSubmited; i++) {
     var UserName = highScoreList[i].name;
     var setScore = highScoreList[i].score;
-
     makeHighScore.appendChild(document.createElement("li")).textContent =
-      UserName + " -" + setScore;
+      UserName + " - " + setScore;
   }
 }
 
@@ -108,17 +117,14 @@ function startQuiz() {
   //add a way to set questions back to full
   // questionAmount = questionAmount - 1;
   playAgainButton.style.visibility = "hidden";
-  console.log(num);
 
   if (questionAmount === 0) {
-    submitScore();
+    scoresSubmited++;
+    goToSubmit();
     return;
   }
-  if (num === 3) {
-    console.log("im here");
-  }
+
   var currentQuestion = Questions[num];
-  console.log("the current value of num is " + num);
 
   answerArea.textContent = "";
 
@@ -211,16 +217,21 @@ startEl.addEventListener("click", () => {
   thisMakesRestart();
 });
 
-playAgainButton.addEventListener("click", function () {
-  console.log("it worked!");
-  console.log("the question amount is now" + questionAmount);
+playAgainButton.addEventListener("click", function (event) {
   questionAmount = 3;
-//WHAT TO DO TOMRROW
-//  FIGURE OUT HOW TO HIDE HIGHSCORE LIST ON PLAY EVENT CLICK
-  findlis.style.visibility = "hidden";
-  document.querySelector("li").remove();
+  event.stopPropagation;
+  var liLength = document.getElementById("HighScores").children.length;
+  document.getElementById("HighScores").style.visibility = "hidden";
+  console.log(liLength);
+  for (let i = 0; i < liLength; i++) {
+    makeHighScore.children[i].setAttribute("id", "listItem");
+    var findLIS = document.getElementById("listItem");
+    console.log(findLIS);
+    findLIS.remove();
+  }
 
   num = 0;
-  console.log("the question amount is now" + questionAmount);
   startQuiz();
+  startTimer();
+  return;
 });
