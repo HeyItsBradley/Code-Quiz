@@ -14,15 +14,17 @@
     <title>Code Quiz</title>
   </head>
   <body>
+    <!-- this will be the view highscores button, play again, and the timer -->
     <header>
       <h1 id="scoreButton">View HighScores</h1>
       <div id="playAgain"></div>
       <h2>Time: <span id="timer"></span></h2>
     </header>
-
+    <!-- this will be the main content area -->
     <div class="mainSection">
       <h3 id="Heading">Coding Quiz Challenge!</h3>
       <div id="submitionForm">
+        <!-- this input field will let users submit their name and highscores -->
         <input
           type="text"
           name="userName"
@@ -36,9 +38,11 @@
         limit! Keep in mind selected a wrong answer will lower the timer by 10
         seconds. Your final score will be the amount of time left, good luck !!!
       </p>
+      <!-- this OL will later contain the contenets of the highscores -->
       <ol id="HighScores"></ol>
+      <!-- this section it to place the buttons for the quiz portion -->
       <section id="placeButtons"></section>
-
+      <!-- start button for the quiz -->
       <button id="startButton">Start Quiz</button>
     </div>
     <script src="./Assets/script.js"></script>

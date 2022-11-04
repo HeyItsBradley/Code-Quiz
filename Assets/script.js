@@ -4,6 +4,7 @@ var scoreButton = document.getElementById("scoreButton");
 var headerEl = document.querySelector("#Heading");
 var startText = document.getElementById("text");
 var submitButton = document.getElementById("submitName");
+// this array will hold the questions,options, and answers
 var Questions = [
   {
     title: "This is questions 1",
@@ -41,12 +42,10 @@ var playAgainButton = document.getElementById("playAgain");
 var scoresSubmited = 0;
 var time = 30;
 var madePlayAgainButton = document.querySelector("#playAgain");
-
-console.log(highScoreList);
-
+// this hides element that the user doenst need to see yet
 usersName.style.visibility = "hidden";
 submitName.style.visibility = "hidden";
-
+// this functions will start the timer at 30 and run down. Also if timer runs out, the quiz will end
 function startTimer() {
   time = 30;
   var timeLeft = setInterval(function () {
@@ -59,11 +58,12 @@ function startTimer() {
     }
   }, 1000);
 }
-
+// this function will cause the program to go to the submitscore section
 function goToSubmit() {
   console.log("goToSubmit Has occured");
   submitScore();
 }
+// this function will allow the user to submit there score by entering text in the a box and clicking a button
 function submitScore() {
   document.body.querySelector("#placeButtons").textContent = "";
   document.getElementById("Heading").textContent = "Almost done !";
@@ -106,6 +106,8 @@ function submitScore() {
     }
   });
 }
+// this function will display the highscore screen and dynamically genereate list items depending on the local strogae
+//bug, else statement creates multiple items in the local storage.
 function highScoreScreen() {
   // scoresSubmited++;
   document.getElementById("HighScores").style.visibility = "visible";
@@ -124,7 +126,7 @@ function highScoreScreen() {
       UserName + " - " + setScore;
   }
 }
-
+// this function will start the quiz and display the questions. Dynamically generates buttons.
 function startQuiz() {
   //add a way to set questions back to full
   // questionAmount = questionAmount - 1;
@@ -229,19 +231,19 @@ function startQuiz() {
     }
   });
 }
-
+//this will create the play again button on the highscores screen
 function thisMakesRestart() {
   madePlayAgainButton.appendChild(
     document.createElement("button")
   ).textContent = "Play Again";
 }
-
+//this listening for the user to click on start quiz, then sets some values and starts quiz and timer functions
 startEl.addEventListener("click", () => {
   startQuiz();
   startTimer();
   thisMakesRestart();
 });
-
+//this listenins for the user to click the play again button. Sets some variables, deletes whats in the highscores listsm and starts the quiz and timer.
 playAgainButton.addEventListener("click", function (event) {
   questionAmount = 3;
   event.stopPropagation;
