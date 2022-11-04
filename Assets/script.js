@@ -34,7 +34,6 @@ var amountHighScores = 5;
 var makeHighScore = document.getElementById("HighScores");
 var playAgainButton = document.getElementById("playAgain");
 var scoresSubmited = 0;
-var submitionForm = document.getElementById("submitionForm");
 
 var madePlayAgainButton = document.querySelector("#playAgain");
 
@@ -64,7 +63,6 @@ function submitScore() {
   usersName.style.visibility = "visible";
   submitName.style.visibility = "visible";
   //clear out form on load
-  submitionForm.textContent = "";
 
   submitName.addEventListener("click", function (event) {
     event.preventDefault();
@@ -87,8 +85,15 @@ function submitScore() {
         score: score,
       };
       highScoreList.push(scoreAndName);
+
+      // highScoreList.sort((a, b) => b.score - a.score);
+
+      // highScoreList.splice(5);
+
       localStorage.setItem("highscores", JSON.stringify(highScoreList));
+
       console.log(highScoreList);
+
       highScoreScreen();
       return;
     }
