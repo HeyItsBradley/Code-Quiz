@@ -34,7 +34,7 @@ var amountHighScores = 5;
 var makeHighScore = document.getElementById("HighScores");
 var playAgainButton = document.getElementById("playAgain");
 var scoresSubmited = 0;
-
+var time = 30;
 var madePlayAgainButton = document.querySelector("#playAgain");
 
 console.log(highScoreList);
@@ -43,12 +43,14 @@ usersName.style.visibility = "hidden";
 submitName.style.visibility = "hidden";
 
 function startTimer() {
-  var time = 30;
+  time = 30;
   var timeLeft = setInterval(function () {
     document.getElementById("timer").textContent = time;
     time--;
     if (time < 0 || questionAmount <= 0) {
       clearInterval(timeLeft);
+      time=0
+      goToSubmit();
     }
   }, 1000);
 }
@@ -121,8 +123,8 @@ function highScoreScreen() {
 function startQuiz() {
   //add a way to set questions back to full
   // questionAmount = questionAmount - 1;
+  console.log("startQuize has run");
   playAgainButton.style.visibility = "hidden";
-
   if (questionAmount === 0) {
     scoresSubmited++;
     goToSubmit();
@@ -173,6 +175,9 @@ function startQuiz() {
       console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
+      console.log("thats incorrect");
+      time = time - 5;
+      console.log("time is now " + time);
     }
   });
 
@@ -184,6 +189,9 @@ function startQuiz() {
       console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
+      console.log("thats incorrect");
+      time = time - 5;
+      console.log("time is now " + time);
     }
   });
 
@@ -195,6 +203,10 @@ function startQuiz() {
       console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
+      console.log("thats incorrect");
+      time = time - 5;
+
+      console.log("time is now " + time);
     }
   });
 
@@ -206,6 +218,9 @@ function startQuiz() {
       console.log("the question amount is now" + questionAmount);
       startQuiz();
     } else {
+      console.log("thats incorrect");
+      time = time - 5;
+      console.log("time is now " + time);
     }
   });
 }
